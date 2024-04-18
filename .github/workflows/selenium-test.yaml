@@ -1,0 +1,22 @@
+name: selenium
+on: workflow_dispatch
+jobs:
+  build:
+   runs-on: ubuntu-latest
+   steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK 17
+      uses: actions/setup-java@v2
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        maven: 3.9.0
+    - name:  Install Google Chrome # Using shell script to install Google Chrome
+      run:   |
+        chmod +x ./InstallChrome.sh
+        ./InstallChrome.sh 
+    - name: selenium-test with Maven
+      run: |
+       chromedriver --version
+       mvn spring-javaformat:apply
+       mvn -Dtest=LibertyDemoSelenium test
