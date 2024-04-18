@@ -224,5 +224,4 @@ jobs:
         with:
           docker_name: 'owasp/zap2docker-stable'
           target: 'https://test-actions-ruth.liberty-test-cluster-7e2996fc95fd6eb4a4c7a63aa3e73699-0000.us-south.containers.appdomain.cloud/'
-          rules_file_name: '.zap/rules.tsv'
-          cmd_options: '-a'
+
