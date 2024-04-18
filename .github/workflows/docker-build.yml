@@ -19,4 +19,4 @@ jobs:
       run: |
        chromedriver --version
        mvn spring-javaformat:apply
-       mvn -Dtest=Selenium test
+       mvn -Dtest=LibertyDemoSelenium test
