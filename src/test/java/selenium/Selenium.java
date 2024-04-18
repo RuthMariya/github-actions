@@ -19,7 +19,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.interactions.Actions;
 
-public class Selenium {
+public class LibertyDemoSelenium {
 
 	private WebDriver driver;
 
@@ -27,14 +27,15 @@ public class Selenium {
 
 	JavascriptExecutor js;
 
-	final static String APPLICATION_BASE_URL = "https://gbsgit.edst.ibm.com";
+	final static String APPLICATION_BASE_URL = "https://test-actions-ruth.liberty-test-cluster-7e2996fc95fd6eb4a4c7a63aa3e73699-0000.us-south.containers.appdomain.cloud/";
 
 	@Before
 	public void setUp() {
 
 		ChromeOptions options = new ChromeOptions();
+		System.setProperty("webdriver.chrome.driver", "/opt/tools/chromedriver-linux64/chromedriver");
 		options.addArguments("--remote-allow-origins=*");
-		options.addArguments("headless");
+		options.addArguments("--headless=new");
 		driver = new ChromeDriver(options);
 		driver.get(APPLICATION_BASE_URL);
 		js = (JavascriptExecutor) driver;
@@ -51,40 +52,163 @@ public class Selenium {
 	}
 
 	@Test
-	public void alogin() {
-    //driver.get("https://gbsgit.edst.ibm.com/users/sign_in");
-    driver.manage().window().setSize(new Dimension(1050, 652));
-    driver.findElement(By.linkText("Standard")).click();
-    assertThat(driver.findElement(By.linkText("Standard")).getText(), is("Standard"));
-    driver.findElement(By.id("user_login")).click();
-    driver.findElement(By.id("user_login")).sendKeys("libeadmin1@in.ibm.com");
-    driver.findElement(By.id("user_login")).click();
-    driver.findElement(By.id("new_user")).click();
-    driver.findElement(By.id("user_password")).sendKeys("liberty@1234");
-    assertThat(driver.findElement(By.id("new_user")).getText(), is("Username or email\\\\nPassword\\\\nForgot your password?\\\\nRemember me\\\\nSign in"));
-    assertThat(driver.findElement(By.cssSelector(".js-sign-in-button")).getText(), is("Sign in"));
-    driver.findElement(By.cssSelector(".js-sign-in-button")).click();
-  }
+	public void testSearchOwner() {
+		// driver.get("https://liberty-demo-petclinic-demo.liberty-test-cluster-7e2996fc95fd6eb4a4c7a63aa3e73699-0000.us-south.containers.appdomain.cloud/");
+		driver.manage().window().setSize(new Dimension(1050, 660));
+		driver.findElement(By.cssSelector(".nav-item:nth-child(2) span:nth-child(2)")).click();
+		driver.findElement(By.id("lastName")).click();
+		driver.findElement(By.id("lastName")).sendKeys("franklin");
+		driver.findElement(By.cssSelector(".btn:nth-child(1)")).click();
+		driver.findElement(By.cssSelector("b")).click();
+		assertThat(driver.findElement(By.cssSelector("b")).getText(), is("George Franklin"));
+		driver.close();
+	}
 
 	@Test
-	public void bselectproject() {
-    //driver.get("https://gbsgit.edst.ibm.com/");
-    driver.manage().window().setSize(new Dimension(1050, 652));
-    assertThat(driver.findElement(By.cssSelector(".project-row:nth-child(2) .project-name")).getText(), is("liberty-demo"));
-    driver.findElement(By.cssSelector(".project-row:nth-child(2) .project-name")).click();
-    js.executeScript("window.scrollTo(0,243)");
-    js.executeScript("window.scrollTo(0,215)");
-    js.executeScript("window.scrollTo(0,353)");
-    assertThat(driver.findElement(By.cssSelector(".tree-item:nth-child(12) .position-relative:nth-child(2)")).getText(), is("Jenkinsfile"));
-    driver.findElement(By.cssSelector(".tree-item:nth-child(12) .position-relative:nth-child(2)")).click();
-    js.executeScript("window.scrollTo(0,0)");
-  }
+	public void testAddOwner() {
+		// driver.get("https://liberty-demo-petclinic-demo.liberty-test-cluster-7e2996fc95fd6eb4a4c7a63aa3e73699-0000.us-south.containers.appdomain.cloud/");
+		driver.manage().window().setSize(new Dimension(1050, 660));
+		driver.findElement(By.cssSelector(".nav-item:nth-child(2) span:nth-child(2)")).click();
+		driver.findElement(By.linkText("Add Owner")).click();
+		driver.findElement(By.id("firstName")).click();
+		driver.findElement(By.id("firstName")).sendKeys("Karthik");
+		driver.findElement(By.id("lastName")).click();
+		driver.findElement(By.id("lastName")).sendKeys("D");
+		driver.findElement(By.id("address")).click();
+		driver.findElement(By.id("address")).sendKeys("abc");
+		driver.findElement(By.id("city")).click();
+		driver.findElement(By.id("city")).sendKeys("xxyz");
+		driver.findElement(By.id("telephone")).click();
+		driver.findElement(By.id("telephone")).sendKeys("9878965454");
+		driver.findElement(By.cssSelector(".btn")).click();
+		driver.findElement(By.cssSelector(".active")).click();
+		driver.findElement(By.cssSelector(".btn:nth-child(1)")).click();
+		driver.findElement(By.cssSelector(".fa-step-forward")).click();
+		driver.findElement(By.cssSelector(".fa-step-forward")).click();
+		driver.findElement(By.cssSelector(".fa-step-forward")).click();
+		driver.findElement(By.cssSelector(".fa-step-forward")).click();
+		driver.findElement(By.linkText("Karthik D")).click();
+		assertThat(driver.findElement(By.cssSelector(".xd-container")).getText(), is(
+				"Owner Information\nName Karthik D\nAddress abc\nCity xxyz\nTelephone 9878965454\nEdit Owner Add New Pet\n\n\nPets and Visits"));
+
+	}
+
 	@Test
-	public void clogout() {
-    driver.get("https://gbsgit.edst.ibm.com/");
-    driver.manage().window().setSize(new Dimension(1296, 688));
-    driver.findElement(By.cssSelector(".user-bar-item")).click();
-    assertThat(driver.findElement(By.cssSelector(".sign-out-link > .gl-new-dropdown-item-text-wrapper")).getText(), is("Sign out"));
-    driver.findElement(By.cssSelector(".sign-out-link > .gl-new-dropdown-item-text-wrapper")).click();
-  }
+	public void testEditOwner() {
+		// driver.get("https://liberty-demo-petclinic-demo.liberty-test-cluster-7e2996fc95fd6eb4a4c7a63aa3e73699-0000.us-south.containers.appdomain.cloud/");
+		driver.manage().window().setSize(new Dimension(1050, 660));
+		driver.findElement(By.cssSelector(".nav-item:nth-child(2) span:nth-child(2)")).click();
+		driver.findElement(By.id("lastName")).click();
+		driver.findElement(By.id("lastName")).sendKeys("franklin");
+		driver.findElement(By.cssSelector(".btn:nth-child(1)")).click();
+		driver.findElement(By.cssSelector(".btn:nth-child(3)")).click();
+		driver.findElement(By.id("telephone")).click();
+		driver.findElement(By.id("telephone")).click();
+		{
+			WebElement element = driver.findElement(By.id("telephone"));
+			Actions builder = new Actions(driver);
+			builder.doubleClick(element).perform();
+		}
+		driver.findElement(By.id("telephone")).sendKeys("9677500809");
+		driver.findElement(By.cssSelector(".btn")).click();
+		driver.findElement(By.cssSelector(".active")).click();
+		driver.findElement(By.cssSelector(".col-sm-offset-2")).click();
+		driver.findElement(By.id("lastName")).click();
+		driver.findElement(By.id("lastName")).sendKeys("franklin");
+		driver.findElement(By.cssSelector(".btn:nth-child(1)")).click();
+		driver.findElement(By.cssSelector("tr:nth-child(4) > td")).click();
+		driver.findElement(By.cssSelector("tr:nth-child(4) > td")).click();
+		{
+			WebElement element = driver.findElement(By.cssSelector("tr:nth-child(4) > td"));
+			Actions builder = new Actions(driver);
+			builder.doubleClick(element).perform();
+		}
+		assertThat(driver.findElement(By.cssSelector("tr:nth-child(4) > td")).getText(), is("9677500809"));
+		driver.close();
+	}
+
+	@Test
+	public void testAddPet() {
+		driver.manage().window().setSize(new Dimension(1050, 660));
+		driver.findElement(By.cssSelector(".nav-item:nth-child(2) span:nth-child(2)")).click();
+		driver.findElement(By.cssSelector(".btn:nth-child(1)")).click();
+		driver.findElement(By.linkText("Eduardo Rodriquez")).click();
+		driver.findElement(By.cssSelector(".btn:nth-child(4)")).click();
+		driver.findElement(By.id("name")).click();
+		driver.findElement(By.id("name")).sendKeys("tim");
+		driver.findElement(By.id("birthDate")).click();
+		driver.findElement(By.id("birthDate")).sendKeys("2023-03-02");
+		driver.findElement(By.id("type")).click();
+		{
+			WebElement dropdown = driver.findElement(By.id("type"));
+			dropdown.findElement(By.xpath("//option[. = 'dog']")).click();
+		}
+		driver.findElement(By.cssSelector(".btn")).click();
+		driver.findElement(By.cssSelector(".active")).click();
+		driver.findElement(By.cssSelector(".btn:nth-child(1)")).click();
+		driver.findElement(By.linkText("Eduardo Rodriquez")).click();
+		// driver.findElement(By.cssSelector("tr:nth-child(3) dd:nth-child(2)")).click();
+		assertThat(driver.findElement(By.cssSelector("tr:nth-child(3) dd:nth-child(2)")).getText(), is("tim"));
+		// driver.findElement(By.cssSelector("tr:nth-child(3) >
+		// td:nth-child(4)")).click();
+		assertThat(driver.findElement(By.cssSelector("tr:nth-child(3) dd:nth-child(4)")).getText(), is("2023-03-02"));
+		// driver.findElement(By.cssSelector("tr:nth-child(3) dd:nth-child(6)")).click();
+		assertThat(driver.findElement(By.cssSelector("tr:nth-child(3) dd:nth-child(6)")).getText(), is("dog"));
+	}
+
+	@Test
+	public void testEditPet() {
+		// driver.get("https://liberty-demo-petclinic-demo.liberty-test-cluster-7e2996fc95fd6eb4a4c7a63aa3e73699-0000.us-south.containers.appdomain.cloud/");
+		driver.manage().window().setSize(new Dimension(1050, 660));
+		driver.findElement(By.cssSelector(".nav-item:nth-child(2) > .nav-link")).click();
+		driver.findElement(By.cssSelector(".btn:nth-child(1)")).click();
+		driver.findElement(By.cssSelector(".fa-step-forward")).click();
+		driver.findElement(By.linkText("Carlos Estaban")).click();
+		driver.findElement(By.linkText("Edit Pet")).click();
+		driver.findElement(By.id("name")).click();
+		driver.findElement(By.id("name")).sendKeys("Luckie");
+		driver.findElement(By.cssSelector(".btn")).click();
+		driver.findElement(By.cssSelector(".active > span:nth-child(2)")).click();
+		driver.findElement(By.cssSelector(".btn:nth-child(1)")).click();
+		driver.findElement(By.cssSelector(".fa-step-forward")).click();
+		driver.findElement(By.linkText("Carlos Estaban")).click();
+		assertThat(driver.findElement(By.cssSelector("tr:nth-child(2) dd:nth-child(6)")).getText(), is("cat"));
+	}
+
+	@Test
+	public void testAddVisit() {
+		// driver.get("https://liberty-demo-petclinic-demo.liberty-test-cluster-7e2996fc95fd6eb4a4c7a63aa3e73699-0000.us-south.containers.appdomain.cloud/");
+		driver.manage().window().setSize(new Dimension(1050, 660));
+		driver.findElement(By.cssSelector(".nav-item:nth-child(2) span:nth-child(2)")).click();
+		driver.findElement(By.cssSelector(".btn:nth-child(1)")).click();
+		driver.findElement(By.linkText("Peter McTavish")).click();
+		driver.findElement(By.linkText("Add Visit")).click();
+		driver.findElement(By.id("date")).click();
+		driver.findElement(By.id("date")).sendKeys("2023-03-25");
+		driver.findElement(By.id("description")).click();
+		driver.findElement(By.id("description")).sendKeys("regular");
+		driver.findElement(By.cssSelector(".btn")).click();
+		driver.findElement(By.cssSelector(".active")).click();
+		driver.findElement(By.cssSelector(".btn:nth-child(1)")).click();
+		driver.findElement(By.linkText("Peter McTavish")).click();
+		driver.findElement(By.cssSelector("tbody:nth-child(2) > tr:nth-child(1) > td:nth-child(1)")).click();
+		assertThat(
+				driver.findElement(By.cssSelector("tbody:nth-child(2) > tr:nth-child(1) > td:nth-child(1)")).getText(),
+				is("2023-03-25"));
+		driver.findElement(By.cssSelector("tbody:nth-child(2) > tr:nth-child(1) > td:nth-child(2)")).click();
+		assertThat(
+				driver.findElement(By.cssSelector("tbody:nth-child(2) > tr:nth-child(1) > td:nth-child(2)")).getText(),
+				is("regular"));
+	}
+
+	@Test
+	public void testListVeterinarians() {
+		// driver.get("https://liberty-demo-petclinic-demo.liberty-test-cluster-7e2996fc95fd6eb4a4c7a63aa3e73699-0000.us-south.containers.appdomain.cloud/");
+		driver.manage().window().setSize(new Dimension(1050, 660));
+		driver.findElement(By.cssSelector(".nav-item:nth-child(3) > .nav-link")).click();
+		assertThat(driver.findElement(By.cssSelector(".xd-container")).getText(), is(
+				"Veterinarians\nName Specialties\nJames Carter none\nHelen Leary radiology\nLinda Douglas dentistry surgery\nRafael Ortega surgery\nHenry Stevens radiology\nPages: [ 1 2 ] "));
+	}
+
 }
+
