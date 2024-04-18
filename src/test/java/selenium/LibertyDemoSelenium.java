@@ -33,7 +33,6 @@ public class LibertyDemoSelenium {
 	public void setUp() {
 
 		ChromeOptions options = new ChromeOptions();
-		System.setProperty("webdriver.chrome.driver", "/opt/tools/chromedriver-linux64/chromedriver");
 		options.addArguments("--remote-allow-origins=*");
 		options.addArguments("--headless=new");
 		driver = new ChromeDriver(options);
