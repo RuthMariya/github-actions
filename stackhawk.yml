@@ -1,11 +1,11 @@
-# -- stackhawk configuration for petclinic-app --
+# -- stackhawk configuration for petclinic-app-dast --
 app:
   # -- An applicationId obtained from the StackHawk platform. --
-  applicationId: 8388cc41-654e-4af4-8cb0-c27271e8ebdd # (required)
+  applicationId: e59bae95-1c3c-4344-a387-8615c61e8378 # (required)
   # -- The environment for the applicationId defined in the StackHawk platform. --
   env: Development # (required)
   # -- The url of your application to scan --
-  host: https://https://test-actions-ruth.liberty-test-cluster-7e2996fc95fd6eb4a4c7a63aa3e73699-0000.us-south.containers.appdomain.cloud # (required)
+  host: https://test-actions-ruth.liberty-test-cluster-7e2996fc95fd6eb4a4c7a63aa3e73699-0000.us-south.containers.appdomain.cloud # (required)
 
 
 # -- Customized Configuration for GraphQL/SOAP/OpenAPI, add here --
