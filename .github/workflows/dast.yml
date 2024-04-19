@@ -12,7 +12,7 @@ jobs:
      - name: HCL AppScan DAST Analyzer
        uses: HCL-TECH-SOFTWARE/appscan-dast-action@v1.0.5
        with:
-        baseurl: https://cloud.appscan.com
+        baseurl: https://test-actions-ruth.liberty-test-cluster-7e2996fc95fd6eb4a4c7a63aa3e73699-0000.us-south.containers.appdomain.cloud/
         asoc_key: ${{secrets.ASOC_KEY}}
         asoc_secret: ${{secrets.ASOC_SECRET}} 
         application_id: 83b2b0c1-956d-45c6-a31e-b4c8faa12578
