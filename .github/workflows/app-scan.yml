@@ -1,0 +1,21 @@
+name: App-scan
+
+on: workflow_dispatch
+
+  
+jobs:
+
+  app-scan-DAST:
+
+     runs-on: ubuntu-latest
+     steps:
+     - name: HCL AppScan DAST Analyzer
+       uses: HCL-TECH-SOFTWARE/appscan-dast-action@v1.0.5
+       with:
+        baseurl: https://cloud.appscan.com
+        asoc_key: ${{secrets.ASOC_KEY}}
+        asoc_secret: ${{secrets.ASOC_SECRET}} 
+        application_id: 83b2b0c1-956d-45c6-a31e-b4c8faa12578
+        scan_name: github-actions-dast-scan
+        dynamic_scan_type: dast
+    
