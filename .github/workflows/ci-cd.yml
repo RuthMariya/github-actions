@@ -80,8 +80,8 @@ jobs:
            --severity-threshold=high
       - name: Verify SARIF file exists
         run: ls snyk.sarif
-      - name: Replace security-severity undefined for license-related findings 
-        run: sed -i 's/"security-severity":"undefined"/"security-severity":"0"/g' snyk.sarif
+      # - name: Replace security-severity undefined for license-related findings 
+      #   run: sed -i 's/"security-severity":"undefined"/"security-severity":"0"/g' snyk.sarif
      
 
       - name: Upload result to GitHub Code Scanning
