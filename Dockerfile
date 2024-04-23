@@ -9,7 +9,7 @@ EXPOSE 8080
 # Set the working directory
 
 
-COPY staging/artifact/*.jar app.jar
+COPY staging/*.jar app.jar
 
 RUN chmod +755 -R app.jar
 
