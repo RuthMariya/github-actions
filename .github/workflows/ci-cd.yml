@@ -214,6 +214,7 @@ jobs:
     - name: Upload JAR artifact
       uses: actions/upload-artifact@v4
       with:
+         name: UAT-artifact
          path: target/surefire-reports/**
          retention-days: 1 
 
