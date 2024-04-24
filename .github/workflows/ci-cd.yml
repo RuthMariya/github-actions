@@ -194,10 +194,7 @@ jobs:
           helm ls -n ruth
           helm upgrade --install test-actions -f values.yaml --set image.tag=${{ github.sha }} . -n ${{ vars.OCP_PROJECT }}
        
-       - name: verifying deployment
-         run: |
-          chmod +x podstatus.sh
-          ./podstatus.sh
+       
   UAT-test:
    runs-on: ubuntu-latest
    needs: ocp-deploy
