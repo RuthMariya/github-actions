@@ -1,6 +1,6 @@
 #!/bin/bash
 # Name of the deployment
-DEPLOYMENT_NAME="test-actions"
+DEPLOYMENT_NAME="test-actions-liberty-demo"
 
 # Namespace of the deployment
 NAMESPACE="ruth"
