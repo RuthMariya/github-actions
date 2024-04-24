@@ -176,6 +176,8 @@ jobs:
   
   ocp-deploy:
       runs-on: ubuntu-latest
+      environment: 
+        name: ruth
       needs: docker-build
       steps:
        - name: Checkout code
@@ -191,10 +193,13 @@ jobs:
           ls -la
           helm ls -n ruth
           helm upgrade --install test-actions -f values.yaml --set image.tag=${{ github.sha }} . -n ${{ vars.OCP_PROJECT }}
+       
+       - name: verifying deployment
+         run: |
+          chmod +x podstatus.sh
+          ./podstatus.sh
   UAT-test:
    runs-on: ubuntu-latest
-   environment: 
-      name: ruth
    needs: ocp-deploy
    steps:
     - uses: actions/checkout@v4
